@@ -1,0 +1,26 @@
+# Implementation ledger
+
+- User approved design and requested development now; cloud builds and packaging deferred.
+- Preflight: native methods and event payloads fixed in plan; Android and iOS implementations consume same opaque settings JSON and generation tokens.
+- Ruling: no Git repository, so work in place and preserve plan/ledger instead of Git-only helper scripts or commits.
+- Ruling: user instruction to start overrides additional skill plan approval handoff; proceed without another confirmation.
+- Observation: original stm32 directory no longer present at task start; use previously inspected protocol and approved spec, never reconstruct or edit user firmware.
+- Task 1: protocol/config/layout tests RED for absent features, then GREEN 9/9; independent CRC and signed reference fixture pass.
+- Task 2: Android native bridge added; Manifest XML valid; SDK/Kotlin compiler/JDK17 unavailable, native compilation deferred. No packaging attempted.
+- Task 3: iOS native bridge registered with implicit Flutter engine and Xcode target; plist and source references valid; Swift/Xcode unavailable, three XCTest cases not executed.
+- Task 4: controller/adapter tests RED then GREEN; added newest-connect-wins regression (RED then GREEN 7/7 controller cases).
+- Review finding: asynchronous scan error overwritten by terminal scan event; regression reproduced RED, fixed with terminal error retention, pending final suite.
+- Permission interruption regression: native permission-alert exception must survive Dart inactive callback; interruption API preserves pending scan but disarms active control. Real background always disconnects. Test passed during scan-error RED run.
+- Ruling: Android no-response future waits for local GATT write callback to serialize GATT operations; callback is not MCU acknowledgement.
+- Ruling: native lifecycle teardown attempts next-sequence zero frame when idle; no queue or wait. Delivery best effort; firmware watchdog required.
+- Ruling: invalid finite persisted numbers normalize to safe boundaries matching reference; malformed/unsupported settings restore defaults. Cost if wrong: invalid values restore boundary instead of default.
+- Final review: fresh reviewer audited native/core/UI contracts; native compilation was unavailable, with no build claim.
+- Final fix: rapid mode reversal originally kept the earlier requested mode; regression RED then GREEN with synchronous latest profile selection.
+- Final fix: cancelling a scan during pending teardown originally allowed it to start later; two regressions reproduced RED, independent scan cancellation identity and event acceptance added.
+- Final fix: the 300ms sender deadline originally omitted the inter-frame delay; 50ms + 280ms pending-write regression reproduced RED, deadline now starts at previous completed frame.
+- Final UI fixes verified: pointer revisions checked synchronously before any move/release; metrics changes release sticks; eager pad recognizer prevents portrait scroll; settings sections validate/apply independently. UI RED regressions observed, then all UI/adaptation 20/20 passed.
+- Final core fixes verified: scan cancellation and 300ms completion-gap regressions GREEN in full suite; latest profile persisted correctly; terminal scan error retained.
+- Final verification, 2026-10-14: `flutter analyze lib test --no-pub` => No issues found; `flutter test --no-pub` => 43/43 passed; `dart format --output=none --set-exit-if-changed lib test` => 18 files, 0 changed.
+- Visual verification: five Chinese-font/icon renders inspected and copied into docs/previews; portrait top-card overlap and pad/footer spacing corrected.
+- Native validation: Android Manifest parses with six permissions; iOS Info.plist parses with bluetooth usage; BleBridge registered in Xcode source group/build phase. Android compile, iOS compile/three XCTest cases and physical BLE tests remain unexecuted and documented; packaging deferred per user.
+- Workspace handoff: code stays in current nongit workspace. No branch, commit, push, deployment or external publication performed.
